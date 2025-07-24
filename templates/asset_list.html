@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block content %}
+<h2 class="mb-4">💱 Котировки</h2>
+<table class="table table-bordered">
+  <thead><tr><th>Актив</th><th>Цена (USD)</th></tr></thead>
+  <tbody>
+    {% for asset in assets %}
+    <tr>
+      <td>{{ asset.name }}</td>
+      <td>
+        {% if asset.price %}
+          {{ "%.2f"|format(asset.price) }}
+        {% else %}
+          <span class="text-muted">⏳ Цена недоступна</span>
+        {% endif %}
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

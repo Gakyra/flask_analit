@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>🧠 Нейро-анализ портфеля</h2>
+<div class="card">
+  <div class="card-body">
+    <pre>{{ text }}</pre>
+  </div>
+</div>
+<a href="{{ url_for('portfolio.view_portfolio') }}" class="btn btn-secondary mt-3">← Назад в портфель</a>
+{% endblock %}

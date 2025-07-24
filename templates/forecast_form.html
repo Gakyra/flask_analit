@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2 class="mb-4">Прогноз активу</h2>
+<form method="POST" class="p-4 border rounded shadow" style="max-width: 600px; margin: auto;">
+  <div class="mb-3">
+    <label for="symbol" class="form-label">Символ активу</label>
+    <input type="text" name="symbol" id="symbol" class="form-control" required>
+  </div>
+  <div class="mb-3">
+    <label for="method" class="form-label">Метод</label>
+    <select name="method" id="method" class="form-select">
+      <option value="moving_avg">Ковзне середнє</option>
+      <option value="exponential_smoothing">Експоненційне згладжування</option>
+    </select>
+  </div>
+  <div class="mb-3">
+    <label for="params" class="form-label">Параметри (наприклад: window=3)</label>
+    <input type="text" name="params" id="params" class="form-control">
+  </div>
+  <button class="btn btn-success w-100">Розрахувати прогноз</button>
+</form>
+{% endblock %}

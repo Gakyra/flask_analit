@@ -1,0 +1,35 @@
+
+{% extends 'base.html' %}
+{% block content %}
+<h2 class="mb-4">Графік {{ symbol }}</h2>
+<canvas id="chart" height="100"></canvas>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+  const labels = {{ data | map(attribute='date') | list | tojson }};
+  const values = {{ data | map(attribute='close') | list | tojson }};
+
+  new Chart(document.getElementById("chart"), {
+    type: "line",
+    data: {
+      labels: labels,
+      datasets: [{
+        label: "Ціна закриття",
+        data: values,
+        borderColor: "blue",
+        backgroundColor: "rgba(0,123,255,0.1)",
+        fill: true,
+        tension: 0.3,
+        pointRadius: 3
+      }]
+    },
+    options: {
+      responsive: true,
+      scales: {
+        y: { beginAtZero: false }
+      }
+    }
+  });
+</script>
+<a href="/assets" class="btn btn-outline-secondary mt-4">← Назад до списку активів</a>
+{% endblock %}

@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% block content %}
+<h2 class="text-center mb-4">📊 Умный прогноз стоимости актива</h2>
+
+<form method="POST" class="mb-4">
+  {{ form.hidden_tag() }}
+  <div class="row">
+    <div class="col-md-6">{{ form.symbol.label }}{{ form.symbol(class="form-select") }}</div>
+    <div class="col-md-6">{{ form.submit(class="btn btn-primary w-100 mt-2") }}</div>
+  </div>
+</form>
+
+{% if data %}
+<h5 class="mt-4">Прогноз по: <strong>{{ symbol.upper() }}</strong></h5>
+<canvas id="forecastChart" height="140"></canvas>
+
+<table class="table table-bordered mt-3">
+  <thead><tr><th>День</th><th>Цена ($)</th></tr></thead>
+  <tbody>
+    {% for price in data %}
+      {% set prev = data[loop.index0 - 1] if loop.index0 > 0 else price %}
+      {% set is_up = price > prev %}
+      <tr>
+        <td>{{ loop.index }}</td>
+        <td class="{{ 'text-success' if is_up else 'text-danger' }}">
+          {{ "%.2f"|format(price) }}
+          {% if loop.index0 > 0 %}
+            <small>({{ "%+.2f%%"|format(((price - prev) / prev) * 100) }})</small>
+          {% endif %}
+        </td>
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+const ctx = document.getElementById("forecastChart").getContext("2d");
+new Chart(ctx, {
+  type: "line",
+  data: {
+    labels: [...Array({{ data|length }}).keys()].map(i => "День " + (i+1)),
+    datasets: [{
+      label: "{{ symbol.upper() }} — прогноз",
+      data: {{ data|tojson }},
+      borderColor: "green",
+      backgroundColor: "rgba(0, 255, 0, 0.1)",
+      tension: 0.3
+    }]
+  },
+  options: { responsive: true, scales: { y: { beginAtZero: false } } }
+});
+</script>
+{% endif %}
+{% endblock %}

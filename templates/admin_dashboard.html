@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>👨‍💼 Админ-панель</h2>
+<div class="row">
+  <div class="col-md-6">
+    <h4>Пользователи</h4>
+    <ul class="list-group">
+      {% for user in users %}
+      <li class="list-group-item">
+        {{ user.username }} — Email: {{ user.email }} — Admin: {{ '✅' if user.is_admin else '❌' }}
+      </li>
+      {% endfor %}
+    </ul>
+  </div>
+  <div class="col-md-6">
+    <h4>Прогнозы</h4>
+    <ul class="list-group">
+      {% for f in forecasts %}
+      <li class="list-group-item">
+        User #{{ f.user_id }} — {{ f.symbol }} — {{ f.created_at.strftime('%d.%m.%Y %H:%M') }}
+      </li>
+      {% endfor %}
+    </ul>
+  </div>
+</div>
+{% endblock %}

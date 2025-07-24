@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block content %}
+  <h2 class="mb-4">Створити статтю</h2>
+  <form method="POST" class="p-4 border rounded shadow" style="max-width: 700px; margin: auto;">
+    <div class="mb-3">
+      <label for="title" class="form-label">Заголовок</label>
+      <input type="text" id="title" name="title" class="form-control" required>
+    </div>
+    <div class="mb-3">
+      <label for="content" class="form-label">Зміст</label>
+      <textarea id="content" name="content" class="form-control" rows="6" required></textarea>
+    </div>
+    <div class="mb-3">
+      <label for="tag" class="form-label">Тег</label>
+      <select id="tag" name="tag" class="form-select">
+        <option value="психологія">Психологія</option>
+        <option value="стратегія">Стратегія</option>
+        <option value="техніка">Технічний аналіз</option>
+      </select>
+    </div>
+    <div class="d-grid mt-3">
+      <button class="btn btn-success">Опублікувати</button>
+    </div>
+  </form>
+{% endblock %}

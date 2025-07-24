@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block content %}
+  <h2 class="mb-4">Публікації</h2>
+  {% for post in posts %}
+    <div class="card mb-4">
+      <div class="card-header">
+        <strong>{{ post.title }}</strong> — <span class="badge bg-secondary">{{ post.tag }}</span>
+      </div>
+      <div class="card-body">
+        <p>{{ post.content[:300] }}...</p>
+        <a href="/posts/{{ post.id }}" class="btn btn-sm btn-outline-primary">Читати далі</a>
+      </div>
+      <div class="card-footer text-muted">
+        Автор: {{ post.author }} | {{ post.created_at.strftime('%d.%m.%Y') }}
+      </div>
+    </div>
+  {% endfor %}
+{% endblock %}

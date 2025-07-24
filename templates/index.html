@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% block content %}
+<h2 class="text-center">Добро пожаловать, {{ username }}!</h2>
+<p class="lead text-center">Выберите раздел, чтобы начать работу:</p>
+
+<div class="row mt-4">
+  <div class="col-md-3">
+    <div class="card">
+      <div class="card-body text-center">
+        <h5 class="card-title">💱 Котировки</h5>
+        <p class="card-text">Просмотр актуальных цен и графиков.</p>
+        <a href="{{ url_for('assets.asset_list') }}" class="btn btn-primary">Перейти</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-3">
+    <div class="card">
+      <div class="card-body text-center">
+        <h5 class="card-title">💼 Портфель</h5>
+        <p class="card-text">Ваши инвестиции и баланс.</p>
+        <a href="{{ url_for('portfolio.view_portfolio') }}" class="btn btn-primary">Перейти</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-3">
+    <div class="card">
+      <div class="card-body text-center">
+        <h5 class="card-title">👤 Профиль</h5>
+        <p class="card-text">Данные аккаунта и настройки.</p>
+        <a href="{{ url_for('profile.profile_view') }}" class="btn btn-primary">Перейти</a>
+      </div>
+    </div>
+  </div>
+
+  {% if current_user.is_admin %}
+  <div class="col-md-3">
+    <div class="card border-warning">
+      <div class="card-body text-center">
+        <h5 class="card-title text-warning">🛠 Админ‑панель</h5>
+        <p class="card-text">Управление пользователями и логами.</p>
+        <a href="{{ url_for('admin.admin_dashboard') }}" class="btn btn-warning">Перейти</a>
+      </div>
+    </div>
+  </div>
+  {% endif %}
+</div>
+
+<!-- 💡 LLM секция с аналитикой -->
+<div class="card mt-5 border-info">
+  <div class="card-header bg-info text-white">
+    🧠 Нейро‑аналитика от AI
+  </div>
+  <div class="card-body">
+    {% if analysis %}
+      <pre class="bg-light p-3 border rounded">{{ analysis }}</pre>
+      <div class="text-end mt-2">
+        <a href="{{ url_for('forecast.forecast_view') }}" class="btn btn-outline-info">📊 Прогноз на основе анализа</a>
+      </div>
+    {% else %}
+      <p class="text-muted mb-0">Аналитика появится после добавления активов в портфель.</p>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

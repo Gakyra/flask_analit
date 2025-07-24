@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block content %}
+<h1 class="text-center mb-4">Платформа инвестиционной аналитики</h1>
+<p class="lead text-center">Добро пожаловать! Для доступа ко всем функциям войдите или зарегистрируйтесь.</p>
+
+<div class="d-flex justify-content-center gap-3 mt-4">
+  <a href="{{ url_for('auth.login') }}" class="btn btn-outline-primary">Войти</a>
+  <a href="{{ url_for('auth.register') }}" class="btn btn-primary">Регистрация</a>
+</div>
+
+<hr class="my-5">
+
+<div class="text-center">
+  <h5>Что умеет платформа:</h5>
+  <ul class="list-unstyled mt-3">
+    <li>📈 Просмотр котировок</li>
+    <li>💼 Управление портфелем</li>
+    <li>⚙️ Telegram‑бот с уведомлениями</li>
+    <li>🔒 Защищённый кабинет аналитики</li>
+  </ul>
+</div>
+{% endblock %}

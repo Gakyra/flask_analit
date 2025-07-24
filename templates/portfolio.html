@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+{% block content %}
+<h2 class="text-center mb-4">💼 Ваш инвестиционный портфель</h2>
+
+<form method="POST" class="mb-4">
+  {{ form.hidden_tag() }}
+  <div class="row g-3 align-items-center">
+    <div class="col-md-4">
+      {{ form.symbol.label }}{{ form.symbol(class="form-select") }}
+      <small class="form-text text-muted">Выберите актив из списка</small>
+    </div>
+    <div class="col-md-3">{{ form.quantity.label }}{{ form.quantity(class="form-control") }}</div>
+    <div class="col-md-3">{{ form.buy_price.label }}{{ form.buy_price(class="form-control") }}</div>
+    <div class="col-md-2">{{ form.submit(class="btn btn-success w-100") }}</div>
+  </div>
+</form>
+
+<div class="mb-3">
+  <strong>Сортировать по:</strong>
+  <a href="?sort=name" class="btn btn-sm btn-outline-primary">Названию</a>
+  <a href="?sort=profit" class="btn btn-sm btn-outline-primary">Прибыли</a>
+  <a href="?sort=current" class="btn btn-sm btn-outline-primary">Текущей цене</a>
+</div>
+
+<table class="table table-bordered table-striped mt-3">
+  <thead class="table-light">
+    <tr>
+      <th>Название</th>
+      <th>Символ</th>
+      <th>Кол-во</th>
+      <th>Покупка ($)</th>
+      <th>Текущая ($)</th>
+      <th>Прибыль ($)</th>
+      <th>Действия</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for inv in investments %}
+    <tr>
+      <td>{{ inv.name }}</td>
+      <td>{{ inv.symbol.upper() }}</td>
+      <td>{{ "%.4f"|format(inv.quantity) }}</td>
+      <td>{{ "%.2f"|format(inv.buy) }}</td>
+      <td>
+        {% if inv.current %}
+          <span class="fw-bold text-success">{{ "%.2f"|format(inv.current) }}</span>
+        {% else %}
+          <span class="text-muted">⏳ недоступна</span>
+        {% endif %}
+      </td>
+      <td>
+        {% if inv.profit is not none %}
+          <span class="{{ 'text-success' if inv.profit >= 0 else 'text-danger' }}">
+            {{ "%.2f"|format(inv.profit) }}
+          </span>
+        {% else %}
+          <span class="text-muted">—</span>
+        {% endif %}
+      </td>
+      <td>
+        <a href="{{ url_for('portfolio.edit_investment', item_id=inv.id) }}"
+           class="btn btn-sm btn-outline-primary">✏️</a>
+        <a href="{{ url_for('portfolio.delete_investment', item_id=inv.id) }}"
+           class="btn btn-sm btn-outline-danger">✖</a>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}
