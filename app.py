@@ -12,6 +12,9 @@ from routes.forecast import forecast_bp
 from routes.profile import profile_bp
 from routes.llm import llm_bp
 from routes.admin import admin_bp, ensure_superadmin
+from routes.psychology import psychology
+
+
 
 load_dotenv()
 
@@ -38,6 +41,7 @@ app.register_blueprint(forecast_bp)
 app.register_blueprint(profile_bp)
 app.register_blueprint(llm_bp)
 app.register_blueprint(admin_bp)
+app.register_blueprint(psychology)
 
 # 🛡️ Создаём супер-админа
 with app.app_context():

@@ -1,6 +1,10 @@
 # config.py
 import os
 from dotenv import load_dotenv
+
+
+HF_TOKEN = os.getenv('HF_TOKEN')
+
 load_dotenv()
 
 class Config:

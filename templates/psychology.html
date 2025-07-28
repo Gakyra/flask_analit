@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>📘 Психология инвестора</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f8fbff;
+      margin: 40px;
+    }
+    .container {
+      max-width: 700px;
+      margin: auto;
+      background-color: #fff;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 0 12px rgba(0,0,0,0.08);
+    }
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #334;
+    }
+    select, button {
+      font-size: 16px;
+      padding: 8px 12px;
+      margin: 10px 5px;
+    }
+    #advice {
+      font-size: 18px;
+      margin-top: 20px;
+      text-align: center;
+      color: #223;
+    }
+    #svg {
+      margin-top: 20px;
+      text-align: center;
+    }
+  </style>
+  <script>
+    async function fetchAdvice() {
+      const category = document.getElementById("category").value;
+      const response = await fetch(`/api/advice?category=${category}`);
+      const data = await response.json();
+      document.getElementById("advice").textContent = data.advice;
+      document.getElementById("svg").innerHTML = data.svg;
+    }
+  </script>
+</head>
+<body>
+  <div class="container">
+    <h2>🧠 Психологические советы инвестору</h2>
+    <div class="text-center">
+      <select id="category">
+        <option value="">🎲 Случайный</option>
+        <option value="мышление">🧠 Мышление</option>
+        <option value="дисциплина">📋 Дисциплина</option>
+        <option value="страх">😨 Страх</option>
+        <option value="мотивация">🔥 Мотивация</option>
+      </select>
+      <button onclick="fetchAdvice()">🎲 Новый совет</button>
+    </div>
+
+    <p id="advice"></p>
+    <div id="svg"></div>
+  </div>
+</body>
+</html>
