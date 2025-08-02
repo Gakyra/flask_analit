@@ -9,3 +9,4 @@ instance/
 *.log
 *.bak
 .venv/
+telegram_analit\.env
